@@ -2,13 +2,13 @@ var url  = require('url'),
     http = require('http'),
     fs   = require('fs'),
     express = require('express'),
-    app = express.createServer(),
+    app = express(),
     https = require('https'),
     qs   = require('querystring');
 
 // Load config defaults from JSON file.
 // Environment variables override defaults.
-var config = JSON.parse(fs.readFileSync(__dirname+ '/config.json.example', 'utf-8'));
+var config = JSON.parse(fs.readFileSync(__dirname+ '/config.json', 'utf-8'));
 for (var i in config) {
   config[i] = process.env[i] || config[i];
 }
@@ -45,8 +45,8 @@ function authenticate(code, cb) {
 
 // Convenience for allowing CORS on routes - GET only
 app.all('*', function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*'); 
-  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS'); 
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
